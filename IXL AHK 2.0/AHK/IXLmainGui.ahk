@@ -25,6 +25,7 @@ Gui, Add, Tab3, , General|Search Settings|List of Hotkeys
 Gui, Tab, 1
 BuildButton("mainscript", "Main Script", 55, 50, 205, 30)
 BuildTap("CustomAHK", "Custom AHK", 55, 90, 205, 30)
+BuildTap("splitfile", "Split File", 55, 130, 205, 30)
 BuildTap("copyGUI", "Display Copy Macros", 55, 210, 205, 30)
 
 
@@ -69,7 +70,7 @@ Gui, Add, Radio, Checked vOnBottom gTOP_OFF, AHK window not always displayed
 
 Gui, Show, w320 h530, IXL AHK 
 
-scriptArray := ["CustomAHK", "mainscript", "copyGUI"]
+scriptArray := ["CustomAHK", "mainscript", "copyGUI", "splitfile"]
 
 return 
 ;----------------------------------- GENERAL TAB -------------------------------------------------------------------------------------------------------------
@@ -90,6 +91,12 @@ mainscriptOff:
 {
 	OffButton("mainscript", "\scripts")
 	return 
+}
+;----------------------------------- SPLIT FILE -------------------------------------------------------------------------------------------------------------
+splitfileON:
+{
+    OnButton("splitfile", "\scripts")
+    return
 }
 ;----------------------------------- COPY MACROS DISPLAY -------------------------------------------------------------------------------------------------------------
 copyGUIOn:
