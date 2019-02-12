@@ -139,12 +139,16 @@ QuiaSearch(Byref contents, Byref new_window) {
     return 
 }
 
-IXLSearchSetting(Byref thing, Byref new_window, Byref sr, Byref sm, Byref sf) {
+IXLSearchSetting(Byref thing, Byref new_window, Byref sr, Byref sm, Byref sf, Byref q) {
     
     new_window_setting := new_window ;saves new_window's mode 
     if RegExMatch(thing, "[\w-_.]+@(?:\w+(?::\d+)?\.){1,3}(?:\w+\.?){1,2}", contents) {
         QuiaSearch(contents, new_window)
-        SFSearch(contents, new_window)
+        
+        if(q = true)
+        {
+            SFSearch(contents, new_window)
+        }
         ;MsgBox, subman 
         if(sm = true)
         {

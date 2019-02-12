@@ -2,6 +2,7 @@
 #NoTrayIcon
 #Persistent
 #include %A_ScriptDir%\lib\GUILibrary.ahk 
+;#include %A_ScriptDir%\lib\scrollbar.ahk
 
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 DetectHiddenWindows, On
@@ -13,8 +14,12 @@ EnvSet, sr, 1
 EnvSet, new_window, 1 
 EnvSet, sm, 1 
 EnvSet, sf, 1 
+EnvSet, q, 1
 
-Gui, +Resize 
+;OnMessage(0x115, "OnScroll") ; WM_VSCROLL
+;OnMessage(0x114, "OnScroll") ; WM_HSCROLL
+
+Gui, +Resize  
 Gui, Add, Tab3, , General|Search Settings|List of Hotkeys 
 
 Gui, Tab, 1
@@ -27,7 +32,7 @@ Gui, Tab, 2
 Gui, Add, Text,, Search Settings
 Gui, Add, Radio, Checked vSendRight0 gSEND_RIGHT_ON, Send right ON
 Gui, Add, Radio, vSendRight1 gSEND_RIGHT_OFF, Send right OFF 
-Gui, Add, Text,, 
+Gui, Add, Text,, ---------------------------------------------------------------------
 Gui, Add, Text,,Triforce search options
 Gui, Add, Radio, Checked vNewWindow0 gNEW_WINDOW_ON, Create new window when searching 
 Gui, Add, Radio, vNewWindow1 gNEW_WINDOW_OFF, Create new tab when searching
@@ -36,9 +41,15 @@ Gui, Add, Text,,SubmanSearch for e-mail?
 Gui, Add, Radio, Checked vSubman0 gSUBMAN_SEARCH_ON, Subman search for e-mail included
 Gui, Add, Radio, vSubman1 gSUBMAN_SEARCH_OFF, Don't use Subman for e-mail search
 Gui, Add, Text,,
+Gui, Add, Text,, SalesforceSearch for e-mail?
+Gui, Add, Radio, Checked vSalesForce2 gSFS_ON, SalesForce search for e-mail on. 
+Gui, Add, Radio, vSalesForce3 gSFS_OFF, SalesForce search for e-mail off. 
+Gui, Add, Text,,----------------------------------------------------------------------
 Gui, Add, Text,,SalesForce Search for Account number?
 Gui, Add, Radio, Checked vSalesForce0 gSALESFORCE_ON, SalesForce search for Account Number included
 Gui, Add, Radio, vSalesForce1 gSALESFORCE_OFF, Don't include SalesForce for Account Number search 
+;GroupAdd, MyGui, % "ahk_id " . WinExist()
+
 
 Gui, Tab, 3
 Gui, Add, Text,, ddd - time and date and initial functions 
@@ -52,11 +63,11 @@ Gui, Add, Text,, ctrl + Shift + 0-9 - copies and creates a macro to the `nspecif
 Gui, Add, Text,, ctrl + alt + 0-9 - pastes the macro to the corresponding `nnumber key 
 
 Gui, Tab 
-Gui, Add, Button, x10 y350 vReloadButton gRELOAD_ON, Reload 
+Gui, Add, Button, x10 y450 vReloadButton gRELOAD_ON, Reload 
 Gui, Add, Radio, vOnTop gTOP_ON, AHK window always displayed 
 Gui, Add, Radio, Checked vOnBottom gTOP_OFF, AHK window not always displayed 
 
-Gui, Show, w320 h450, IXL AHK 
+Gui, Show, w320 h530, IXL AHK 
 
 scriptArray := ["CustomAHK", "mainscript", "copyGUI"]
 
@@ -128,6 +139,19 @@ SUBMAN_SEARCH_OFF:
     CheckForScript()
     return 
 }
+;----------------------------------- SF search for e-mail setting -------------------------------------------------------------------------------------------------------------
+SFS_ON:
+{
+    EnvSet, q, 1
+    CheckForScript()
+    return 
+}
+SFS_OFF:
+{
+    EnvSet, q, 0
+    CheckForScript()
+    return 
+}
 ;----------------------------------- SALES FORCE SEARCH SETTING -------------------------------------------------------------------------------------------------------------
 SALESFORCE_ON:
 {
@@ -175,3 +199,19 @@ CheckForScript() {
 		return 
 	}
 }
+
+;----------------------------------- SCROLL BAR -------------------------------------------------------------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;------------------------------------------------------------------------------------------------------------------------------------------------
+/*GuiSize:
+    UpdateScrollBars(A_Gui, A_GuiWidth, A_GuiHeight)
+return
+
+#IfWinActive ahk_group MyGui
+WheelUp::
+WheelDown::
++WheelUp::
++WheelDown::
+    ; SB_LINEDOWN=1, SB_LINEUP=0, WM_HSCROLL=0x114, WM_VSCROLL=0x115
+    OnScroll(InStr(A_ThisHotkey,"Down") ? 1 : 0, 0, GetKeyState("Shift") ? 0x114 : 0x115, WinExist())
+return*/

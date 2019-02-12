@@ -101,67 +101,6 @@ Send, ^v
 Send, {enter}
 Clipboard := email
 Return
-;----------------------------------- FETCH -------------------------------------------------------------------------------------------------------------
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;-------------------------------------------------------------------------------------------------------------------------------------------------------
-:?*:xx::
-
-MovePosX := A_ScreenWidth/2
-MovePosY := A_ScreenHeight/2
-
-WinGetActiveTitle, derp 
-Clipboard = 
-Send, ^+{Left}
-Send ^c 
-
-fet := Clipboard
-
-winactivate ahk_exe chrome.exe
-
-
-Loop, 100
-{
-   WinGetTitle, Title, A  ;get active window title
-   if(InStr(Title, "Fetch")>0)
-   {
-      GOTO, FETCH ; Terminate the loop
-   }
-   Send ^{Tab}
-   Sleep, 50
-}
-
-Exit 
-
-FETCH:
-winactivate ahk_exe chrome.exe
-MPY := MovePosY - 264
-MouseClick, left, %MovePosX%, %MPY%
-
-Send, ^+{Home}
-Send, {BackSpace}
-sleep 100
-;Send, %fet%
-Send, ^v
-Send, {enter}
-sleep 250
-
-MouseClick, left, %MovePosX%, %MovePosY%
-
-Loop, 100
-{
-    WinGetActiveTitle, herp
-    ;MsgBox %herp% : %derp%
-    if(InStr(herp, derp)>0)
-    {
-        break 
-    }
-    Send ^{tab}
-    Sleep, 50
-}
-
-Send, ^v
-
-return 
 
 ;-----------------------------------EOH-------------------------------------------------------------------------------------------------------------
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
