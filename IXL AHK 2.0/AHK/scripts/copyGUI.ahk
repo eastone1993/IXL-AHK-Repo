@@ -44,7 +44,6 @@ Gui, Show, w445 h600, Copy Macros
 
 return 
 
-
 GuiClose:
 ExitApp
 

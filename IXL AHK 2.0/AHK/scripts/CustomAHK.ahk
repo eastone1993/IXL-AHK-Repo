@@ -24,7 +24,6 @@ Gui, Add, Radio, x765 y470 vSetting1 gPHRASE_ONLY, Show phrase only
 Gui, +Resize
 Gui, Show, w1000 h500, AHK Creator 
 
-
 return 
 ;----------------------------------- BUILD AND DELETE BUTTONS -------------------------------------------------------------------------------------------------------------
 BUILD:
@@ -65,7 +64,6 @@ PHRASE_ONLY:
 	GuiControl,, CustomRef, % ViewerSettings(setting, viewVal)
 	return 
 }
-
 
 GuiClose:
 ExitApp 
