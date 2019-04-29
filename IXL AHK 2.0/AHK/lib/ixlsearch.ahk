@@ -139,6 +139,81 @@ QuiaSearch(Byref contents, Byref new_window) {
     return 
 }
 
+UserSearch(Byref contents, Byref new_window) {
+    NewWindowSetting(new_window)
+    page := "https://secure.quia.com/servlets/quia.internal.userInfo.UserInfo?logicModule=1&username=" . contents
+    Clipboard := page
+    Clipwait 
+    ChromeActive()
+    Send, ^v
+    Send, {enter}
+    return
+}
+
+IXLSearchSetting(Byref thing, Byref new_window, Byref sr, Byref sm, Byref sf, Byref q) {
+    thing := Trim(thing)
+    new_window_setting := new_window ;saves new_window's mode 
+    if RegExMatch(thing, "[\w-_.]+@(?:\w+(?::\d+)?\.){1,3}(?:\w+\.?){1,2}", contents) {
+        QuiaSearch(contents, new_window)
+        SFSearch(contents, new_window)
+        ;MsgBox, subman 
+        if(q = true)
+        {
+            SFSearch(contents, new_window)
+        }
+        if(sm = true)
+        {
+            ;MsgBox, subman runs 
+            SubmanSearch(contents, new_window)
+        }
+        ;MsgBox, No subman 
+        ;send right setting 
+        ;SendRightSearchSetting(sr)
+    }
+    else if RegExMatch(thing, "[A]\d{2}[-]", needle) ;account number with prefix
+    {
+        if(sf = true)
+        {
+           Loop, Parse, thing, -
+            {
+                if(A_Index=2)
+                    anum := A_LoopField
+            }
+            SFSearch(anum, new_window) 
+        }
+        SubmanAccountSearch(thing, new_window)
+    }
+    else if RegExMatch(thing, "\[0-9]+") ;account or case number
+    {
+        Length := StrLen(thing)
+        ;MsgBox, %thing% %Length%
+        if (Length=8) ;CASE NUMBERS ARE 8 DIGITS ALWAYS
+            SFSearch(thing, new_window)
+        else                            ;account number without prefix 
+        {
+            if(sf = true)
+                SFSearch(thing, new_window)
+            SubmanAccountSearch(thing, new_window)
+        }   
+    }
+    else if RegExMatch(thing, "\w+[@]\w+|\w+", needle)  ;username 
+    {
+        userSearch(needle, new_window)
+    }
+    else 
+    {
+        MsgBox, Not a searchable item!
+        return 
+    }
+
+    SendRightSearchSetting(sr)
+    new_window := new_window_setting ;sets new_window to original mode 
+
+    return 
+
+}
+
+/*
 IXLSearchSetting(Byref thing, Byref new_window, Byref sr, Byref sm, Byref sf, Byref q) {
     
     new_window_setting := new_window ;saves new_window's mode 
@@ -188,3 +263,4 @@ IXLSearchSetting(Byref thing, Byref new_window, Byref sr, Byref sm, Byref sf, By
 
 }
 
+*/

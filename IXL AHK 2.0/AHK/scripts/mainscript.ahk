@@ -11,7 +11,7 @@
 }
 #IfWinNotExist, `%A_ScriptDir`%\auxillary\searchkey.ahk 
 {
-  Run, %A_ScriptDir%\auxillary\searchkey.ahk 
+	Run, %A_ScriptDir%\auxillary\searchkey.ahk 
 }
 
 OnExit("ExitFunc")
@@ -20,7 +20,7 @@ ExitFunc() {
 	DetectHiddenWindows, On 
 	WinClose, %A_ScriptDir%\auxillary\CopyMacros.ahk ahk_class AutoHotkey
 	WinClose, %A_ScriptDir%\auxillary\ExcelHotkeys.ahk ahk_class AutoHotkey 
-  WinClose, %A_ScriptDir%\auxillary\searchkey.ahk ahk_class AutoHotkey
+ 	WinClose, %A_ScriptDir%\auxillary\searchkey.ahk ahk_class AutoHotkey
 	return 
 }
 
