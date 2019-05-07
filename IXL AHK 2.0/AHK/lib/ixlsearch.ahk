@@ -183,7 +183,7 @@ IXLSearchSetting(Byref thing, Byref new_window, Byref sr, Byref sm, Byref sf, By
         }
         SubmanAccountSearch(thing, new_window)
     }
-    else if RegExMatch(thing, "[0-9]+") ;account or case number
+    else if RegExMatch(thing, "\b[0-9]+") ;account or case number
     {
         Length := StrLen(thing)
         ;MsgBox, %thing% %Length%
